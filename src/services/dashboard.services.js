@@ -2,17 +2,17 @@ const models = require('../../database/models');
 
 const getCollectionNames = async () => {
   const collectionNames = await models.collection_details.findAll();
-  return collectionNames;
+  return {data:collectionNames};
 };
 
 const getAllContentTypes = async () => {
   const contentTypes = await models.content_type.findAll();
-  return contentTypes;
+  return {data:contentTypes};
 };
 
 const getContentTypeById = async (id) => {
   const contentType = await models.content_type.findByPk(id);
-  return contentType;
+  return {data:contentType};
 };
 
 const getCollectionFieldsById = async (id) => {
@@ -21,12 +21,25 @@ const getCollectionFieldsById = async (id) => {
       collection_id: id
     }
   });
-  return collectionFields;
+  return {data:collectionFields};
+};
+
+const addContentType = async (body) => {
+  const contentType = await models.content_type.create({
+    name: body.name,
+    fields:{}
+  });
+  const collectionType = await models.collection_details.create({
+    name: contentType.name,
+    content_id: contentType.id
+  });
+  return {data:{...contentType.dataValues, ...collectionType.dataValues}};
 };
 
 module.exports = {
   getCollectionNames,
   getAllContentTypes,
   getContentTypeById,
-  getCollectionFieldsById
+  getCollectionFieldsById,
+  addContentType
 };

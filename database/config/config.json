@@ -2,21 +2,23 @@
   "development": {
     "username": "postgres",
     "password": "password",
-    "database": "backend-service",
+    "database": "cms",
     "host": "127.0.0.1",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "port": 5435 
   },
   "test": {
     "username": "postgres",
     "password": "password",
-    "database": "backend-service",
+    "database": "cms",
     "host": "127.0.0.1",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "port": 5435 
   },
   "docker": {
     "username": "postgres",
     "password": "password",
-    "database": "backend-service",
+    "database": "cms",
     "host": "backend-db",
     "dialect": "postgres",
     "port": 5432

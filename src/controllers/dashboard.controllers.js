@@ -1,6 +1,6 @@
 const services = require('../services');
 const http2Constants = require('http2').constants;
-const httpError= require('../exceptions/httpError.exception');
+const httpError= require('../exceptions/httpError.exceptions');
 
 const getCollectionNames = async (req, res) => {
   try{

@@ -1,7 +1,8 @@
 const models = require('../../database/models');
-const httpError = require('../exceptions/httpError.exception');
+const httpError = require('../exceptions/httpError.exceptions');
 const http2Constants = require('http2').constants;
 const updateJsonKey = require('../utils/updateJsonKey.util');
+
 const getCollectionNames = async () => {
   if (! await models.collection_details.findAll())
     throw new httpError('No collection names found',http2Constants.HTTP_STATUS_INTERNAL_SERVER_ERROR);
@@ -89,7 +90,7 @@ const addContentTypeFields = async (id, body) => {
   if (!collectionDetails){
     return {contentId:updatedContentTypeId};
   }
-  //create a new object where value of body.fields object keys is null
+
   const newEntry = Object.keys(body.fields).reduce((acc, key) => {
     acc[key] = null;
     return acc;

@@ -7,10 +7,10 @@ const getCollectionNames = async (req, res) => {
     const collectionNames = await services.getCollectionNames();
     if(!collectionNames)
       throw new httpError('No collection names found', http2Constants.HTTP_STATUS_INTERNAL_SERVER_ERROR);
-    res.status(http2Constants.HTTP_STATUS_OK).json(collectionNames);
+    res.status(http2Constants.HTTP_STATUS_OK).json({data:collectionNames});
   }
   catch(err){
-    res.status(err.status).json(err.message);
+    res.status(err.status).json({error: err.message});
   }
 };
 
@@ -19,10 +19,10 @@ const getAllContentTypes = async (req, res) => {
     const contentTypes = await services.getAllContentTypes();
     if(!contentTypes)
       throw new httpError('No content types found', http2Constants.HTTP_STATUS_INTERNAL_SERVER_ERROR);
-    res.status(http2Constants.HTTP_STATUS_OK).json(contentTypes);
+    res.status(http2Constants.HTTP_STATUS_OK).json({data: contentTypes});
   }
   catch(err){
-    res.status(err.status).json(err.message);
+    res.status(err.status).json({error: err.message});
   }
 };
 
@@ -31,10 +31,10 @@ const getContentTypeById = async (req, res) => {
     const contentType = await services.getContentTypeById(req.params.id);
     if(!contentType)
       throw new httpError('No content type found', http2Constants.HTTP_STATUS_INTERNAL_SERVER_ERROR);
-    res.status(http2Constants.HTTP_STATUS_OK).json(contentType);
+    res.status(http2Constants.HTTP_STATUS_OK).json({data: contentType});
   }
   catch(err){
-    res.status(err.status).json(err.message);
+    res.status(err.status).json({error: err.message});
   }
 };
 
@@ -43,40 +43,40 @@ const getCollectionFieldsById = async (req, res) => {
     const collectionFields = await services.getCollectionFieldsById(req.params.id);
     if(!collectionFields)
       throw new httpError('No collection fields found', http2Constants.HTTP_STATUS_INTERNAL_SERVER_ERROR);
-    res.status(http2Constants.HTTP_STATUS_OK).json(collectionFields);
+    res.status(http2Constants.HTTP_STATUS_OK).json({data: collectionFields});
   }
   catch(err){
-    res.status(err.status).json(err.message);
+    res.status(err.status).json({error: err.message});
   }
 };
 
 const addContentType = async (req, res) => {
   try{
     const contentType = await services.addContentType(req.body);
-    if(!contentType)
+    if(contentType === {})
       throw new httpError('Failed to add entry', http2Constants.HTTP_STATUS_INTERNAL_SERVER_ERROR);
-    res.status(http2Constants.HTTP_STATUS_OK).json(contentType);
+    res.status(http2Constants.HTTP_STATUS_OK).json({data: contentType});
   }
   catch(err){
-    res.status(err.status).json(err.message);
+    res.status(err.status).json({error: err.message});
   }
 };
 
 const updateContentTypeName = async (req, res) => {
   try{
     const contentType = await services.updateContentTypeName(req.params.id, req.body);
-    if(!contentType)
+    if(contentType === {})
       throw new httpError('Failed to update entry', http2Constants.HTTP_STATUS_INTERNAL_SERVER_ERROR);
     res.status(http2Constants.HTTP_STATUS_OK).json(contentType);
   }
   catch(err){
-    res.status(err.status).json(err.message);
+    res.status(http2Constants.HTTP_STATUS_INTERNAL_SERVER_ERROR).json(err.message);
   }
 };
 
-const updateContentTypeFields = async (req, res) => {
+const addContentTypeFields = async (req, res) => {
   try{
-    const contentType = await services.updateContentTypeFields(req.params.id, req.body);
+    const contentType = await services.addContentTypeFields(req.params.id, req.body);
     if(!contentType)
       throw new httpError('Failed to update entry', http2Constants.HTTP_STATUS_INTERNAL_SERVER_ERROR);
     res.status(http2Constants.HTTP_STATUS_OK).json(contentType);
@@ -94,19 +94,19 @@ const updateFieldName = async (req, res) => {
     res.status(http2Constants.HTTP_STATUS_OK).json(contentType);
   }
   catch(err){
-    res.status(err.status).json(err.message);
+    res.status(http2Constants.HTTP_STATUS_INTERNAL_SERVER_ERROR).json(err.message);
   }
 };
 
 const deleteContentTypeField = async (req, res) => {
   try{
-    const contentType = await services.deleteContentTypeField(req.params.id);
+    const contentType = await services.deleteContentTypeField(req.params.id, req.body);
     if(!contentType)
       throw new httpError('Failed to delete entry', http2Constants.HTTP_STATUS_INTERNAL_SERVER_ERROR);
     res.status(http2Constants.HTTP_STATUS_OK).json(contentType);
   }
   catch(err){
-    res.status(err.status).json(err.message);
+    res.status(http2Constants.HTTP_STATUS_INTERNAL_SERVER_ERROR).json(err.message);
   }
 };
 
@@ -117,8 +117,7 @@ module.exports = {
   getCollectionFieldsById,
   addContentType,
   updateContentTypeName,
-  updateContentTypeFields,
+  addContentTypeFields,
   updateFieldName,
   deleteContentTypeField
-  
 };

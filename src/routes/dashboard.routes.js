@@ -10,7 +10,7 @@ router.route('/collection-fields/:id').get(controller.getCollectionFieldsById);
 router.route('/add-content-type').post(controller.addContentType);
 
 router.route('/update-content-name/:id').patch(controller.updateContentTypeName);
-router.route('/add-content-fields/:id').patch(controller.updateContentTypeFields);
+router.route('/add-content-fields/:id').patch(controller.addContentTypeFields);
 router.route('/update-field-name/:id').patch(controller.updateFieldName);
 
 router.route('/delete-content-field/:id').delete(controller.deleteContentTypeField);

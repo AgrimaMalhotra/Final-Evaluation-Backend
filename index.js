@@ -3,10 +3,15 @@ const app=express();
 const router = require('./src/routes');
 require('dotenv').config();
 const cors = require('cors');
+const corsOrigins = [
+  'http://localhost:3000',
+];
 
+app.use(cors({
+  origin: corsOrigins,
+}));
 app.use(express.json());
 app.use('/',router);
-app.use(cors());
 
 const port= process.env.PORT || 4000;
 

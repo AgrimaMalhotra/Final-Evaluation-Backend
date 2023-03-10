@@ -46,7 +46,7 @@ const getCollectionFieldsById = async (req, res) => {
     res.status(http2Constants.HTTP_STATUS_OK).json({data: collectionFields});
   }
   catch(err){
-    res.status(err.status).json({error: err.message});
+    res.status(http2Constants.HTTP_STATUS_INTERNAL_SERVER_ERROR).json({error: err.message});
   }
 };
 
@@ -58,7 +58,7 @@ const addContentType = async (req, res) => {
     res.status(http2Constants.HTTP_STATUS_OK).json({data: contentType});
   }
   catch(err){
-    res.status(err.status).json({error: err.message});
+    res.status(http2Constants.HTTP_STATUS_INTERNAL_SERVER_ERROR).json({error: err.message});
   }
 };
 
@@ -82,7 +82,7 @@ const addContentTypeFields = async (req, res) => {
     res.status(http2Constants.HTTP_STATUS_OK).json(contentType);
   }
   catch(err){
-    res.status(err.status).json(err.message);
+    res.status(http2Constants.HTTP_STATUS_INTERNAL_SERVER_ERROR).json(err.message);
   }
 };
 
